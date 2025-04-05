@@ -1,4 +1,22 @@
-<div>
-  <h1 class="font-bold text-4xl">Calculator#index</h1>
-  <p>Find me in app/views/calculator/index.html.erb</p>
+<div class="min-h-screen flex flex-col items-center justify-start p-8 bg-gray-900 text-white">
+  
+  <div class="w-full max-w-4xl flex justify-between bg-gray-800 text-white p-4 rounded mb-4">
+    <div>Skill Total</div>
+    <div>EGR Total</div>
+    <div>CV + Bonus</div>
+    <div>Total Score</div>
+  </div>
+
+  <div class="space-y-2 mt-4">
+    <%= render 'shared/button_row', letter: 'J' %>
+    <%= render 'shared/button_row', letter: 'I' %>
+    <%= render 'shared/button_row', letter: 'H' %>
+    <%= render 'shared/button_row', letter: 'G' %>
+    <%= render 'shared/button_row', letter: 'F' %>
+    <%= render 'shared/button_row', letter: 'E' %>
+    <%= render 'shared/button_row', letter: 'D' %>
+    <%= render 'shared/button_row', letter: 'C' %>
+    <%= render 'shared/button_row', letter: 'B' %>
+    <%= render 'shared/button_row', letter: 'A' %>
+  </div>  
 </div>
