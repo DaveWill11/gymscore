@@ -1,22 +1,78 @@
 <div class="min-h-screen flex flex-col items-center justify-start p-8 bg-gray-900 text-white">
   
   <div class="w-full max-w-4xl flex justify-between bg-gray-800 text-white p-4 rounded mb-4">
-    <div>Skill Total</div>
+    <h2 class="text-xl font-bold mb-4">Skill Total: <span id="skills-total">0.0</span></h2>
     <div>EGR Total</div>
     <div>CV + Bonus</div>
     <div>Total Score</div>
   </div>
+  <div class="flex gap-10">
 
-  <div class="space-y-2 mt-4">
-    <%= render 'shared/button_row', letter: 'J' %>
-    <%= render 'shared/button_row', letter: 'I' %>
-    <%= render 'shared/button_row', letter: 'H' %>
-    <%= render 'shared/button_row', letter: 'G' %>
-    <%= render 'shared/button_row', letter: 'F' %>
-    <%= render 'shared/button_row', letter: 'E' %>
-    <%= render 'shared/button_row', letter: 'D' %>
-    <%= render 'shared/button_row', letter: 'C' %>
-    <%= render 'shared/button_row', letter: 'B' %>
-    <%= render 'shared/button_row', letter: 'A' %>
-  </div>  
+    <div class="space-y-2 mt-4">
+      <h2 class="text-lg font-bold mb-2">Skills</h2>
+      <div data-controller="skill-selector">
+        <% ['J','I','H','G','F','E','D','C','B','A'].each do |level| %>
+         <div class="flex items-center gap-2" data-skill-selector-row="<%= level %>">
+            <div class="w-6 font-bold"><%= level %></div>
+            <% 1.upto(8) do |i| %>
+              <button
+                type="button"
+                class="bg-blue-500 text-white rounded px-2 py-1"
+                data-skill-selector-target="button"
+                data-action="click->skill-selector#select"
+                ><%= i %>
+              </button>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div> 
+
+    <div class="space-y-6 mt-4">
+      <div class="mb-2">
+        <h2 class="text-lg font-bold mb-2">EGR</h2>
+
+        <div class="mb-2">
+          <div class="font-semibold mb-1">Group 1</div>
+          <div class="flex gap-2">
+            <% [0.0, 0.1, 0.5].each do |val| %>
+              <button class="bg-green-500 text-white rounded px-2 py-1"><%= val %></button>
+            <% end %>
+          </div>
+        </div>
+
+        <% ['Group 2', 'Group 3'].each do |group| %>
+          <div class="mb-2">
+            <div class="font-semibold mb-1"><%= group %></div>
+            <div class="flex gap-2">
+              <% [0.0, 0.1, 0.3, 0.5].each do |val| %>
+                <button class="bg-green-500 text-white rounded px-2 py-1"><%= val %></button>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <div>
+          <div class="font-semibold mb-1">Group 4</div>
+          <div class="flex flex-wrap gap-2">
+            <% (0..10).each do |n| %>
+              <% val = (n.to_f / 10).round(1)%>
+              <button class="bg-green-500 text-white rounded px-2 py-1"><%= val %></button>
+            <% end %>
+          </div>
+        </div>
+          
+        <div class="mb-2">
+          <h2 class="text-lg font-bold mb-2">Connection Value + Bonus</h2>
+          <div class="flex flex-wrap gap-2">
+            <% (0..10).each do |n| %>
+              <% val = (n.to_f / 10).round(1)%>
+              <button class="bg-purple-500 text-white rounded px-2 py-1"><%= val %></button>
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+    </div> 
+  </div>
 </div>
