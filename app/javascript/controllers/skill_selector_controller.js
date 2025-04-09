@@ -13,39 +13,61 @@ export default class extends Controller {
     const button = event.target
     const value = parseInt(button.textContent)
     const row = button.closest("[data-skill-selector-row]").dataset.skillSelectorRow
-
-    if(this.rowSelections[row] !== undefined) return
-
-    if(this.totalSelected + value > 8) return
-
-    this.rowSelections[row] = value
-    this.totalSelected += value
-
-
-    button.classList.add("bg-green-600")
-    button.disabled = false
-
-    const rowButtons = button.closest("[data-skill-selector-row]").querySelectorAll("button")
-    rowButtons.forEach(btn => {
-        if (btn !== button){
-            btn.disabled = true
-        }
-    })
+  
+    // If the same button is clicked again, undo the selection
+    if (this.rowSelections[row] === value) {
+      delete this.rowSelections[row]
+      this.totalSelected -= value
+    } else {
+      // Otherwise, update the selection in that row
+      // First, subtract previous value if there was one
+      if (this.rowSelections[row] !== undefined) {
+        this.totalSelected -= this.rowSelections[row]
+      }
+  
+      // Check if the new value would exceed the limit
+      if (this.totalSelected + value > 8) return
+  
+      this.rowSelections[row] = value
+      this.totalSelected += value
+    }
+  
     this.updateAllButtons()
     this.updateSkillTotal()
   }
-
+  
+  
   updateAllButtons() {
     const buttons = this.buttonTargets
-    buttons.forEach(button => {
-        const row = button.closest("[data-skill-selector-row]").dataset.skillSelectorRow
-
-        if(this.rowSelections[row] !== undefined) return
-
-        const value = parseInt(button.textContent)
-        button.disabled = this.totalSelected + value > 8
+  
+    buttons.forEach(btn => {
+      const row = btn.closest("[data-skill-selector-row]").dataset.skillSelectorRow
+      const value = parseInt(btn.textContent)
+  
+      // Skip this row — we already updated buttons there
+      if (this.rowSelections[row] !== undefined) {
+        if(this.rowSelections[row] === value) {
+          btn.classList.add("bg-green-600")
+          btn.classList.remove("bg-gray-600")
+          btn.disabled = false
+        } else {
+          btn.classList.add("bg-gray-600")
+          btn.classList.remove("bg-green-600")
+          btn.disabled = false //Can change mind within row
+        }
+      } else {
+        if(this.totalSelected + value > 8) {
+          btn.disabled = true
+          btn.classList.add("bg-gray-600")
+          btn.classList.remove("bg-green-600")
+        } else {
+          btn.disabled = false
+          btn.classList.remove("bg-gray-600", "bg-green-600")
+        }
+      }
     })
   }
+  
 
   updateSkillTotal() {
     let total = 0.0
