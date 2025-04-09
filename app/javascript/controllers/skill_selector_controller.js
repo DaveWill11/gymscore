@@ -12,30 +12,46 @@ export default class extends Controller {
   select(event) {
     const button = event.target
     const value = parseInt(button.textContent)
-    const row = button.closest("[data-skill-selector-row]").dataset.skillSelectorRow
+    const rowElement = button.closest("[data-skill-selector-row]")
+    const row = rowElement.dataset.skillSelectorRow
   
-    // If the same button is clicked again, undo the selection
-    if (this.rowSelections[row] === value) {
-      delete this.rowSelections[row]
-      this.totalSelected -= value
-    } else {
-      // Otherwise, update the selection in that row
-      // First, subtract previous value if there was one
-      if (this.rowSelections[row] !== undefined) {
-        this.totalSelected -= this.rowSelections[row]
+    const previousValue = this.rowSelections[row]
+  
+    // Calculate new total if switching selection
+    const newTotal = this.totalSelected - (previousValue || 0) + value
+  
+    if (newTotal > 8) return
+  
+    // Update selections
+    this.totalSelected = newTotal
+    this.rowSelections[row] = value
+  
+    // Update button styles and states
+    const rowButtons = rowElement.querySelectorAll("button")
+    rowButtons.forEach(btn => {
+      const btnValue = parseInt(btn.textContent)
+      if (btn === button) {
+        btn.classList.add("bg-green-600")
+        btn.classList.remove("bg-gray-600")
+      } else {
+        btn.classList.remove("bg-green-600")
+        if (btnValue + this.totalSelected - value > 8) {
+          btn.disabled = true
+        } else {
+          btn.disabled = false
+        }
+  
+        if (this.rowSelections[row] !== undefined) {
+          btn.classList.add("bg-gray-600")
+        } else {
+          btn.classList.remove("bg-gray-600")
+        }
       }
-  
-      // Check if the new value would exceed the limit
-      if (this.totalSelected + value > 8) return
-  
-      this.rowSelections[row] = value
-      this.totalSelected += value
-    }
+    })
   
     this.updateAllButtons()
     this.updateSkillTotal()
   }
-  
   
   updateAllButtons() {
     const buttons = this.buttonTargets
