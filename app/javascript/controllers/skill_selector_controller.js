@@ -14,6 +14,15 @@ export default class extends Controller {
     const value = parseInt(button.textContent)
     const rowElement = button.closest("[data-skill-selector-row]")
     const row = rowElement.dataset.skillSelectorRow
+
+    // Check if this button is already selected for the row
+  if (this.rowSelections[row] === value) {
+    delete this.rowSelections[row]
+    this.totalSelected -= value
+    this.updateAllButtons()
+    this.updateSkillTotal()
+    return
+  }
   
     const previousValue = this.rowSelections[row]
   
