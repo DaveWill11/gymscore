@@ -2,7 +2,7 @@
   
   <div class="w-full max-w-4xl flex justify-between bg-gray-800 text-white p-4 rounded mb-4">
     <h2 class="text-xl font-bold mb-4">Skill Total: <span id="skills-total">0.0</span></h2>
-    <div>EGR Total</div>
+    <h2 class="text-xl font-bold mb-4">EGR Total: <span id="egr-total">0.0</span></h2>
     <div>CV + Bonus</div>
     <div>Total Score</div>
   </div>
@@ -30,35 +30,55 @@
 
     <div class="space-y-6 mt-4">
       <div class="mb-2">
-        <h2 class="text-lg font-bold mb-2">EGR</h2>
+        <div data-controller="egr-selector">
+          <h2 class="text-lg font-bold mb-2">EGR</h2>
 
-        <div class="mb-2">
-          <div class="font-semibold mb-1">Group 1</div>
-          <div class="flex gap-2">
-            <% [0.0, 0.1, 0.5].each do |val| %>
-              <button class="bg-green-500 text-white rounded px-2 py-1"><%= val %></button>
-            <% end %>
-          </div>
-        </div>
-
-        <% ['Group 2', 'Group 3'].each do |group| %>
           <div class="mb-2">
-            <div class="font-semibold mb-1"><%= group %></div>
-            <div class="flex gap-2">
-              <% [0.0, 0.1, 0.3, 0.5].each do |val| %>
-                <button class="bg-green-500 text-white rounded px-2 py-1"><%= val %></button>
+            <div class="font-semibold mb-1">Group 1</div>
+            <div class="flex gap-2" data-egr-selector-group="1">
+              <% [0.0, 0.1, 0.5].each do |val| %>
+                <button 
+                type="button"
+                class="bg-green-500 text-white rounded px-2 py-1"
+                data-egr-selector-target="button"
+                data-action="click->egr-selector#select"
+                ><%= val %>
+                </button>
               <% end %>
             </div>
           </div>
-        <% end %>
 
-        <div>
-          <div class="font-semibold mb-1">Group 4</div>
-          <div class="flex flex-wrap gap-2">
-            <% (0..10).each do |n| %>
-              <% val = (n.to_f / 10).round(1)%>
-              <button class="bg-green-500 text-white rounded px-2 py-1"><%= val %></button>
-            <% end %>
+          <% ['2', '3'].each do |group| %>
+            <div class="mb-2">
+              <div class="font-semibold mb-1">Group <%= group %></div>
+              <div class="flex gap-2" data-egr-selector-group="<%= group %>">
+                <% [0.0, 0.1, 0.3, 0.5].each do |val| %>
+                  <button 
+                  type="button"
+                  class="bg-green-500 text-white rounded px-2 py-1"
+                  data-egr-selector-target="button"
+                  data-action="click->egr-selector#select"
+                  ><%= val %>
+                  </button>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <div>
+            <div class="font-semibold mb-1">Group 4</div>
+            <div class="flex flex-wrap gap-2" data-egr-selector-group="4">
+              <% (0..10).each do |n| %>
+                <% val = (n.to_f / 10).round(1)%>
+                <button 
+                  type="button"
+                  class="bg-green-500 text-white rounded px-2 py-1"
+                  data-egr-selector-target="button"
+                  data-action="click->egr-selector#select"
+                  ><%= val %>
+                  </button>
+              <% end %>
+            </div>
           </div>
         </div>
           

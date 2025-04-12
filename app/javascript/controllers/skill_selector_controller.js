@@ -6,7 +6,7 @@ export default class extends Controller {
   connect() {
     this.totalSelected = 0
     this.rowSelections = {} //Track selections per row
-    console.log("Stimulus controller started")
+    console.log("Skill controller started")
   }
 
   select(event) {
