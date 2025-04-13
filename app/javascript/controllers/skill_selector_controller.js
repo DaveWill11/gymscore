@@ -104,6 +104,7 @@ export default class extends Controller {
     if (display) {
         display.textContent = total.toFixed(1)
     }
+    window.dispatchEvent(new Event("score:updated"))
   }
 
   skillLetterToValue(letter) {

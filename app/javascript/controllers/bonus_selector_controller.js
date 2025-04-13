@@ -5,6 +5,7 @@ export default class extends Controller {
 
   connect() {
     this.selectedValue = null
+    console.log("Bonus controller started")
   }
 
   select(event) {
@@ -46,6 +47,7 @@ export default class extends Controller {
         ? this.selectedValue.toFixed(1)
         : "0.0"
     }
+    window.dispatchEvent(new Event("score:updated"))
   }
   
 }
