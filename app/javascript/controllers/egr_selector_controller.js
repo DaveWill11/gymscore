@@ -25,6 +25,7 @@ export default class extends Controller {
           // Re-enable all buttons in this group
           groupElement.querySelectorAll("button").forEach(btn => {
             btn.classList.remove("bg-yellow-600", "bg-gray-600")
+            btn.classList.add("bg-green-500")
             btn.disabled = false
           })
       
@@ -42,10 +43,10 @@ export default class extends Controller {
           
             if (btnValue === value) {
               btn.classList.add("bg-yellow-600")
-              btn.classList.remove("bg-gray-600", "bg-green-600")
+              btn.classList.remove("bg-gray-600", "bg-green-500")
               btn.disabled = false
             } else {
-              btn.classList.remove("bg-yellow-600", "bg-green-600")
+              btn.classList.remove("bg-yellow-600", "bg-green-500")
               btn.classList.add("bg-gray-600")
               btn.disabled = true
             }
