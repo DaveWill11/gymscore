@@ -1,0 +1,19 @@
+<div class="space-y-2 mt-4">
+      <h2 class="text-lg font-bold mb-2">Skills</h2>
+      <div data-controller="skill-selector">
+        <% ['J','I','H','G','F','E','D','C','B','A'].each do |level| %>
+         <div class="flex items-center gap-2 mb-2" data-skill-selector-row="<%= level %>">
+            <div class="w-6 text-xl font-bold"><%= level %></div>
+            <% 1.upto(8) do |i| %>
+              <button
+                type="button"
+                class="bg-blue-500 text-white rounded px-2 py-1"
+                data-skill-selector-target="button"
+                data-action="click->skill-selector#select"
+                ><%= i %>
+              </button>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+</div> 
